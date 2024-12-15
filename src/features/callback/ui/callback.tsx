@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
+import { Textarea } from "@/shared/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InvisibleSmartCaptcha } from "@yandex/smart-captcha";
 import { useCallback, useState } from "react";
@@ -24,13 +25,18 @@ export const callbackSchema = z.object({
   phone: z.string().regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
     message: "Номер телефона должен быть в формате +7 (XXX) XXX-XX-XX",
   }),
+  comment: z
+    .string()
+    .min(2, "Расскажите подробнее")
+    .max(512, "Максимум 512 символов")
+    .optional(),
   smart_token: z.string(),
 });
 
 export const CallbackForm = () => {
   const [captchaVisible, setCaptchaVisible] = useState(false);
   const [resetCaptcha, setResetCaptcha] = useState(0);
-  const form = useForm({
+  const form = useForm<z.infer<typeof callbackSchema>>({
     resolver: zodResolver(callbackSchema),
     defaultValues: {
       name: "",
@@ -107,6 +113,25 @@ export const CallbackForm = () => {
                         placeholder="+7 (999) 999-99-99"
                         {...field}
                         {...phoneWithMask("phone", ["+7 (999) 999-99-99"])}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-black">
+                      Ваш номер телефона
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        className="dark:text-black"
+                        placeholder="Коментрий..."
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />

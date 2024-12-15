@@ -6,6 +6,7 @@ import { callbackSchema } from "../ui/callback";
 export const tgAlert = async ({
   name,
   phone,
+  comment,
   smart_token,
 }: z.infer<typeof callbackSchema>) => {
   if (!smart_token) {
@@ -34,7 +35,7 @@ export const tgAlert = async ({
   const topic_id = process.env.TG_TOPIC_ID;
 
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
-  const message = `Новая заявка c сайта!\nИмя: ${name}\nТелефон: ${phone}\n`;
+  const message = `Новая заявка c сайта!\nИмя: ${name}\nТелефон: ${phone}\nКомментарий: ${comment}`;
 
   const params = {
     chat_id: chat_id,
