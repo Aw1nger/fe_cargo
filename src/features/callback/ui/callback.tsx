@@ -82,7 +82,11 @@ export const CallbackForm = () => {
                       Как к вам можно обращаться?
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Ваше имя" {...field} />
+                      <Input
+                        className="dark:text-black"
+                        placeholder="Ваше имя"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -98,6 +102,7 @@ export const CallbackForm = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        className="dark:text-black"
                         type="tel"
                         placeholder="+7 (999) 999-99-99"
                         {...field}
